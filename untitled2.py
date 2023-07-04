@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1N0imYaNEpS5g04h1rXpCqktMvacem5Tq
 """
 
+pip install streamlit
 
 import time
 import math
@@ -43,39 +44,40 @@ with tab1:
     # create button
     btn = st.button("Prediksi")
 
-    if btn:
-        with st.spinner("Memproses..."):
-            time.sleep(5)
+    # ... (previous code)
 
-            # create dataframe from user input
-            user_input_df = pd.DataFrame([user_input], columns=symptoms)
-            # create model
-            model = KNeighborsClassifier(n_neighbors=3)
-            # df[symptoms] to number
-            symptoms_converted = df[symptoms].replace({"Yes": 1, "No": 0})
-            # fit model
-            model.fit(symptoms_converted, df["penyakit"])
-            """---"""
-            # accuracy
-            accuracy = model.score(symptoms_converted, df["penyakit"])
-            precision = model.predict_proba(user_input_df[symptoms])
-            st.text(
-                f"akurasi model: {round(accuracy*100, 2)}% \n"
-                f"presisi model: {round(precision.max()*100, 2)}%"
-            )
-            """---"""
-            # check user_input_df if there is no input
-            if user_input_df.sum().sum() == 0:
-                st.warning("Tidak ada gejala yang dipilih")
+if btn:
+    with st.spinner("Memproses..."):
+        time.sleep(5)
 
-            else:
-                # predict
-                prediction = model.predict(user_input_df)
+        # create dataframe from user input
+        user_input_df = pd.DataFrame([user_input], columns=symptoms)
+        # create model
+        model = KNeighborsClassifier(n_neighbors=3)
+        # fit model
+        model.fit(df[symptoms], df["penyakit"])  # Use df[symptoms] directly here
+        """---"""
+        # accuracy
+        accuracy = model.score(df[symptoms], df["penyakit"])  # Use df[symptoms] for scoring too
+        precision = model.predict_proba(user_input_df[symptoms])
+        st.text(
+            f"akurasi model: {round(accuracy*100, 2)}% \n"
+            f"presisi model: {round(precision.max()*100, 2)}%"
+        )
+        """---"""
+        # check user_input_df if there is no input
+        if user_input_df.sum().sum() == 0:
+            st.warning("Tidak ada gejala yang dipilih")
 
-                # show prediction
-                st.header("Hasil Prediksi")
-                st.write("Berdasarkan gejala yang anda masukkan, kucing anda mungkin mengalami penyakit")
-                st.subheader(prediction[0].capitalize())
+        else:
+            # predict
+            prediction = model.predict(user_input_df)
+
+            # show prediction
+            st.header("Hasil Prediksi")
+            st.write("Berdasarkan gejala yang anda masukkan, kucing anda mungkin mengalami penyakit")
+            st.subheader(prediction[0].capitalize())
+
 
 
 with tab2:
