@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1N0imYaNEpS5g04h1rXpCqktMvacem5Tq
 """
 
-pip install streamlit
-
 import time
 import math
 import streamlit as st
