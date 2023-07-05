@@ -15,14 +15,13 @@ from sklearn.metrics import accuracy_score
 
 # Membaca dataset dari file CSV
 df = pd.read_csv("final.csv")
-df
 
 # Memisahkan fitur dan target
 X = df[['tempmax', 'tempmin', 'temp', 'feelslikemax', 'feelslikemin', 'dew', 'humidity', 'precip', 'precipprob',
         'precipcover', 'snow', 'snowdepth', 'windspeed', 'winddir', 'sealevelpressure', 'cloudcover', 'visibility',
-        'solarradiation', 'solarenergy', 'uvindex', 'cases']]  # Ganti 'cases' dengan nama kolom target yang sesuai
+        'solarradiation', 'solarenergy', 'uvindex', 'cases']]
 
-y = df['labels']  # Ganti 'labels' dengan nama kolom target yang sesuai
+y = df['label']  # Perhatikan bahwa kolom target seharusnya 'label' bukan 'labels'
 
 # Membagi data menjadi data pelatihan dan data uji
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
