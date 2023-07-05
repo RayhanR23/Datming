@@ -25,7 +25,13 @@ X = df[['tempmax', 'tempmin', 'temp', 'feelslikemax', 'feelslikemin', 'dew', 'hu
 y = df['labels']  # Ganti 'labels' dengan nama kolom target yang sesuai
 
 # Membagi data menjadi data pelatihan dan data uji
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Pengurutan ulang indeks data agar sesuai dengan urutan split data
+X_train = X_train.reset_index(drop=True)
+X_test = X_test.reset_index(drop=True)
+y_train = y_train.reset_index(drop=True)
+y_test = y_test.reset_index(drop=True)
 
 # Membuat objek KNN
 knn = KNeighborsClassifier(n_neighbors=3)  # Jumlah tetangga yang akan dipertimbangkan (ubah sesuai kebutuhan)
